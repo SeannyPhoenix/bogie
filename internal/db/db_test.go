@@ -5,8 +5,8 @@ import (
 	"time"
 
 	dynamodb "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/bridgelightcloud/bogie/internal/fixtures"
 	"github.com/google/uuid"
+	"github.com/seannyphoenix/bogie/internal/fixtures"
 	"github.com/stretchr/testify/assert"
 )
 

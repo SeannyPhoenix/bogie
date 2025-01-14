@@ -1,4 +1,4 @@
-module github.com/bridgelightcloud/bogie
+module github.com/seannyphoenix/bogie
 
 go 1.23
 
