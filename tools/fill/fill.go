@@ -8,9 +8,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bridgelightcloud/bogie/internal/db"
-	"github.com/bridgelightcloud/bogie/internal/models"
 	"github.com/google/uuid"
+	"github.com/seannyphoenix/bogie/internal/db"
+	"github.com/seannyphoenix/bogie/internal/models"
 )
 
 func gen(name string) {
