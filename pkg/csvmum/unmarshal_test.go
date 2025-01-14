@@ -8,6 +8,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
+	"github.com/seannyphoenix/bogie/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -61,7 +62,7 @@ func TestNewMarshalerNotAStruct(t *testing.T) {
 	m, err := NewUnmarshaler[testType](b)
 
 	assert.NotNil(m)
-	assert.ErrorAs(err, ptr[*UnmarshalError](nil))
+	assert.ErrorAs(err, util.Ptr[*UnmarshalError](nil))
 }
 
 func TestNewUnmarshalerInvalidDelimiter(t *testing.T) {
@@ -81,7 +82,7 @@ func TestNewUnmarshalerInvalidDelimiter(t *testing.T) {
 	m, err := NewCSVUnmarshaler[testType](c)
 
 	assert.NotNil(m)
-	assert.ErrorAs(err, ptr[*UnmarshalError](nil))
+	assert.ErrorAs(err, util.Ptr[*UnmarshalError](nil))
 }
 
 func TestUnmarshalClosedReader(t *testing.T) {
@@ -101,7 +102,7 @@ func TestUnmarshalClosedReader(t *testing.T) {
 	var record testType
 	err := m.Unmarshal(&record)
 
-	assert.ErrorAs(err, ptr[*UnmarshalError](nil))
+	assert.ErrorAs(err, util.Ptr[*UnmarshalError](nil))
 }
 
 func TestUnmarshalEndOfFile(t *testing.T) {
@@ -140,8 +141,8 @@ func TestUnmarshalParseError(t *testing.T) {
 	var record testType
 	err := m.Unmarshal(&record)
 
-	assert.ErrorAs(err, ptr[*UnmarshalError](nil))
-	assert.ErrorAs(err, ptr[*strconv.NumError](nil))
+	assert.ErrorAs(err, util.Ptr[*UnmarshalError](nil))
+	assert.ErrorAs(err, util.Ptr[*strconv.NumError](nil))
 }
 
 func TestUnmarshal(t *testing.T) {
@@ -174,6 +175,6 @@ func TestUnmarshal(t *testing.T) {
 		Third:   true,
 		Fourth:  3.14,
 		Seventh: nil,
-		Eighth:  ptr(7),
+		Eighth:  util.Ptr(7),
 	}, record)
 }

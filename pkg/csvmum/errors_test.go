@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/seannyphoenix/bogie/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,8 +26,8 @@ func TestUnmarshalError(t *testing.T) {
 
 	err = &UnmarshalError{
 		Err:         fmt.Errorf("some error"),
-		FieldIndex:  ptr(1),
-		ColumnIndex: ptr(2),
+		FieldIndex:  util.Ptr(1),
+		ColumnIndex: util.Ptr(2),
 	}
 	assert.Equal("csv unmarshal: some error (field index: 1, column index: 2)", err.Error())
 }

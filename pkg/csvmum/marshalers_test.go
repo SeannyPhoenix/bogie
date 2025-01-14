@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/seannyphoenix/bogie/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -30,8 +31,8 @@ func TestMarshalValue(t *testing.T) {
 		"float32":                   {float32(3.14), "3.14", nil},
 		"float64":                   {3.14, "3.14", nil},
 		"bool":                      {true, "true", nil},
-		"pointer":                   {ptr(27), "27", nil},
-		"pointerNil":                {nilPtr[int](), "", nil},
+		"pointer":                   {util.Ptr(27), "27", nil},
+		"pointerNil":                {util.NilPtr[int](), "", nil},
 		"textMarshaler":             {customMarshalAndUnmarshal{One: "one"}, "~one~", nil},
 		"textMarshalerInvalidValue": {customMarshalAndUnmarshal{}, "", errors.New("invalid text: ")},
 		"unsupported":               {struct{}{}, "", errors.New("unsupported type: struct")},
