@@ -6,8 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/bridgelightcloud/bogie/pkg/gtfs"
-	"github.com/bridgelightcloud/bogie/pkg/util"
+	"github.com/seannyphoenix/bogie/pkg/gtfs"
+	"github.com/seannyphoenix/bogie/pkg/util"
 )
 
 func main() {

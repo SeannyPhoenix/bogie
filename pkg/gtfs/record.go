@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/bridgelightcloud/bogie/pkg/csvmum"
+	"github.com/seannyphoenix/bogie/pkg/csvmum"
 )
 
 type record interface {

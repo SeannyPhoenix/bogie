@@ -3,9 +3,9 @@ package models
 import (
 	"time"
 
-	"github.com/bridgelightcloud/bogie/internal/db"
-	"github.com/bridgelightcloud/bogie/internal/fixtures"
 	"github.com/google/uuid"
+	"github.com/seannyphoenix/bogie/internal/db"
+	"github.com/seannyphoenix/bogie/internal/fixtures"
 )
 
 var (
@@ -38,4 +38,3 @@ func GetExampleUnitArray(count int) []Unit {
 	}
 	return units
 }
-
