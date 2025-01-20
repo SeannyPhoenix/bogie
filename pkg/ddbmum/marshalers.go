@@ -1,6 +1,7 @@
 package ddbmum
 
 import (
+	"encoding"
 	"reflect"
 	"strconv"
 
@@ -86,7 +87,19 @@ func marshalStruct(v reflect.Value) (types.AttributeValue, error) {
 	return &types.AttributeValueMemberM{Value: values}, nil
 }
 
+func marshalBinaryMarshaler(bm encoding.BinaryMarshaler) (types.AttributeValue, error) {
+	b, err := bm.MarshalBinary()
+	if err != nil {
+		return nil, err
+	}
+	return &types.AttributeValueMemberB{Value: b}, nil
+}
+
 func marshalValue(v reflect.Value) (types.AttributeValue, error) {
+	if bm, ok := v.Interface().(encoding.BinaryMarshaler); ok {
+		return marshalBinaryMarshaler(bm)
+	}
+
 	if marshaler, ok := defaultMarshalers[v.Kind()]; ok {
 		return marshaler(v)
 	}
