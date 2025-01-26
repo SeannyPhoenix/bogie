@@ -4,7 +4,7 @@ go 1.23
 
 toolchain go1.23.3
 
-replace github.com/amadigan/glider => ../glider
+// replace github.com/amadigan/glider => ../glider
 
 require (
 	github.com/aws/aws-lambda-go v1.47.0
