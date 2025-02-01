@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -12,6 +11,9 @@ import (
 
 func main() {
 	tt := util.TrackTime("create GTFS collection")
+
+	handlers := parseFlags()
+
 	defer tt()
 
 	gtfsDir := "gtfs_files"
@@ -31,17 +33,28 @@ func main() {
 		tt()
 	}
 
-	fmt.Println(gtfs.Overview(col))
-
-	errFile, err := os.Create("gtfs_files/gtfs_errors.txt")
-	if err != nil {
-		log.Fatalf("Error creating error file: %s\n", err.Error())
-	}
-	defer errFile.Close()
-
-	for _, e := range col {
-		for _, err := range e.Errors() {
-			errFile.WriteString(fmt.Sprintf("%s\n", err))
+	for _, h := range handlers {
+		err := h(col)
+		if err != nil {
+			log.Fatalf("Error running handler: %s\n", err)
 		}
 	}
+}
+
+func parseFlags() []handler {
+	var hh []handler
+
+	if len(os.Args) > 1 {
+		for _, arg := range os.Args[1:] {
+			switch arg {
+			case "-e":
+				hh = append(hh, writeErrors)
+			case "-o":
+				hh = append(hh, printScheduleOverviews)
+			default:
+			}
+		}
+	}
+
+	return hh
 }
