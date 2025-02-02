@@ -7,6 +7,7 @@ import (
 
 	lambdaEvents "github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/seannyphoenix/bogie/internal/models"
 )
@@ -23,16 +24,12 @@ func getEvents() lambdaEvents.LambdaFunctionURLResponse {
 	}
 
 	var events []models.Event
-	for _, item := range res.Items {
-		var event models.Event
-		err = event.UnmarshalDynamoDB(item)
-		if err != nil {
-			return lambdaEvents.LambdaFunctionURLResponse{
-				StatusCode: http.StatusInternalServerError,
-				Body:       "Error unmarshaling event",
-			}
+	err = attributevalue.UnmarshalListOfMaps(res.Items, &events)
+	if err != nil {
+		return lambdaEvents.LambdaFunctionURLResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "Error unmarshaling events",
 		}
-		events = append(events, event)
 	}
 
 	body, err := json.Marshal(events)
