@@ -7,3 +7,7 @@ type Unit struct {
 	UnitID string   `json:"unitID,omitempty"`
 	Notes  []string `json:"notes,omitempty"`
 }
+
+func NewUnitRecord() Record {
+	return newRecord(DocTypeUnit, nil)
+}

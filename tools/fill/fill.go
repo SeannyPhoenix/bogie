@@ -8,7 +8,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/google/uuid"
 	"github.com/seannyphoenix/bogie/internal/models"
 )
 
@@ -34,14 +33,9 @@ func gen(name string) {
 		count := 1 + strings.Count(unit, "-")
 		for i := 0; i < count; i++ {
 			evt := models.Event{
-				Record: models.Record{
-					Id:   uuid.New(),
-					Type: models.DocTypeEvent,
-				},
+				Record: models.NewEventRecord(nil),
 				Agency: strings.ToUpper(name),
-				UnitID: strings.TrimRightFunc(unit, func(r rune) bool {
-					return r == '-'
-				}),
+				UnitID: strings.TrimRightFunc(unit, func(r rune) bool { return r == '-' }),
 			}
 			evts = append(evts, evt)
 		}

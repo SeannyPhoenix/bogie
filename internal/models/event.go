@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Event struct {
@@ -18,4 +20,8 @@ type Event struct {
 	DepartureTime *time.Time `json:"departureTime,omitempty"` // dt
 	ArrivalTime   *time.Time `json:"arrivalTime,omitempty"`   // at
 	Notes         []string   `json:"notes,omitempty"`         // n
+}
+
+func NewEventRecord(user *uuid.UUID) Record {
+	return newRecord(DocTypeEvent, user)
 }

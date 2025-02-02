@@ -27,6 +27,29 @@ func newRecord(t string, user *uuid.UUID) Record {
 	}
 }
 
+func deactivateRecord(r Record) Record {
+	r.Status = DocStatusInactive
+	r.UpdatedAt = time.Now()
+	return r
+}
+
+func activateRecord(r Record) Record {
+	r.Status = DocStatusActive
+	r.UpdatedAt = time.Now()
+	return r
+}
+
+func updateRecord(r Record) Record {
+	r.UpdatedAt = time.Now()
+	return r
+}
+
+func updateRecordUser(r Record, user *uuid.UUID) Record {
+	r.User = user
+	r.UpdatedAt = time.Now()
+	return r
+}
+
 const (
 	DocTypeEvent = "event"
 	DocTypeUnit  = "unit"
