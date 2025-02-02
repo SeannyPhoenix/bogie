@@ -6,11 +6,12 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/bridgelightcloud/bogie/internal/db"
-	"github.com/bridgelightcloud/bogie/internal/models"
-	"github.com/bridgelightcloud/bogie/internal/util"
+	"github.com/seannyphoenix/bogie/internal/db"
+	"github.com/seannyphoenix/bogie/internal/models"
+	"github.com/seannyphoenix/bogie/internal/util"
 )
 
 type PutEventsRequest struct {
@@ -36,7 +37,7 @@ func writeEvents(r PutEventsRequest) events.LambdaFunctionURLResponse {
 		}
 
 		for _, ev := range chunk {
-			item, err := ev.MarshalDynamoDB()
+			item, err := attributevalue.MarshalMap(ev)
 			if err != nil {
 				println("Error marshaling event: ", err.Error())
 				return events.LambdaFunctionURLResponse{

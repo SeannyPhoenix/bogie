@@ -6,10 +6,11 @@ import (
 
 	lambdaEvents "github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/bridgelightcloud/bogie/internal/models"
 	"github.com/google/uuid"
+	"github.com/seannyphoenix/bogie/internal/models"
 )
 
 func getEvent(id string) lambdaEvents.LambdaFunctionURLResponse {
@@ -37,7 +38,7 @@ func getEvent(id string) lambdaEvents.LambdaFunctionURLResponse {
 	}
 
 	var event models.Event
-	err = event.UnmarshalDynamoDB(item.Item)
+	err = attributevalue.UnmarshalMap(item.Item, &event)
 	if err != nil {
 		return lambdaEvents.LambdaFunctionURLResponse{
 			StatusCode: 500,

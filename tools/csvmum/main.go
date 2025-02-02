@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/bridgelightcloud/bogie/pkg/csvmum"
+	"github.com/seannyphoenix/bogie/pkg/csvmum"
 )
 
 func main() {
