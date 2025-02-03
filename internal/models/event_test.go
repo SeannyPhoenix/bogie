@@ -7,12 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewEventRecord(t *testing.T) {
+func TestNewEventDocument(t *testing.T) {
 	t.Parallel()
 	assert := assert.New(t)
 
 	u := uuid.New()
-	r := NewEventRecord(&u)
+	r := NewEventDocuemnt(&u)
 
 	assert.Equal(DocTypeEvent, r.Type)
 	assert.Equal(&u, r.User)

@@ -7,7 +7,7 @@ import (
 )
 
 type Event struct {
-	Record
+	Document
 
 	Agency        string     `json:"agency,omitempty"`        // a
 	Route         string     `json:"route,omitempty"`         // r
@@ -22,6 +22,6 @@ type Event struct {
 	Notes         []string   `json:"notes,omitempty"`         // n
 }
 
-func NewEventRecord(user *uuid.UUID) Record {
-	return newRecord(DocTypeEvent, user)
+func NewEventDocuemnt(user *uuid.UUID) Document {
+	return newDocument(DocTypeEvent, user)
 }

@@ -6,11 +6,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewUnitRecord(t *testing.T) {
+func TestNewUnitDocuemnt(t *testing.T) {
 	t.Parallel()
 	assert := assert.New(t)
 
-	r := NewUnitRecord()
+	r := NewUnitDocument()
 
 	assert.Equal(DocTypeUnit, r.Type)
 	assert.Nil(r.User)

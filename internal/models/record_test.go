@@ -11,7 +11,7 @@ func TestNewRecord(t *testing.T) {
 	t.Parallel()
 	assert := assert.New(t)
 
-	r := newRecord(DocTypeEvent, nil)
+	r := newDocument(DocTypeEvent, nil)
 
 	ca := r.CreatedAt
 
@@ -28,8 +28,8 @@ func TestUpdateRecord(t *testing.T) {
 	t.Parallel()
 	assert := assert.New(t)
 
-	r := newRecord(DocTypeEvent, nil)
-	r = updateRecord(r)
+	r := newDocument(DocTypeEvent, nil)
+	r = updateDocuemnt(r)
 
 	ca := r.CreatedAt
 
@@ -40,8 +40,8 @@ func TestDeactivateRecord(t *testing.T) {
 	t.Parallel()
 	assert := assert.New(t)
 
-	r := newRecord(DocTypeEvent, nil)
-	r = deactivateRecord(r)
+	r := newDocument(DocTypeEvent, nil)
+	r = deactivateDocument(r)
 
 	assert.Equal(DocStatusInactive, r.Status)
 }
@@ -50,9 +50,9 @@ func TestActivateRecord(t *testing.T) {
 	t.Parallel()
 	assert := assert.New(t)
 
-	r := newRecord(DocTypeEvent, nil)
-	r = deactivateRecord(r)
-	r = activateRecord(r)
+	r := newDocument(DocTypeEvent, nil)
+	r = deactivateDocument(r)
+	r = activateDocument(r)
 
 	assert.Equal(DocStatusActive, r.Status)
 }
@@ -62,55 +62,55 @@ func TestUpdateRecordUser(t *testing.T) {
 	assert := assert.New(t)
 
 	u := uuid.New()
-	r := newRecord(DocTypeEvent, &u)
+	r := newDocument(DocTypeEvent, &u)
 
 	u = uuid.New()
-	r = updateRecordUser(r, &u)
+	r = updateDocuemntUser(r, &u)
 
 	assert.Equal(&u, r.User)
 }
 
 func BenchmarkNewRecord(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		newRecord(DocTypeEvent, nil)
+		newDocument(DocTypeEvent, nil)
 	}
 }
 
 func BenchmarkUpdateRecord(b *testing.B) {
-	r := newRecord(DocTypeEvent, nil)
+	r := newDocument(DocTypeEvent, nil)
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		updateRecord(r)
+		updateDocuemnt(r)
 	}
 }
 
 func BenchmarkDeactivateRecord(b *testing.B) {
-	r := newRecord(DocTypeEvent, nil)
+	r := newDocument(DocTypeEvent, nil)
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		deactivateRecord(r)
+		deactivateDocument(r)
 	}
 }
 
 func BenchmarkActivateRecord(b *testing.B) {
-	r := newRecord(DocTypeEvent, nil)
-	r = deactivateRecord(r)
+	r := newDocument(DocTypeEvent, nil)
+	r = deactivateDocument(r)
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		activateRecord(r)
+		activateDocument(r)
 	}
 }
 
 func BenchmarkUpdateRecordUser(b *testing.B) {
 	u := uuid.New()
-	r := newRecord(DocTypeEvent, &u)
+	r := newDocument(DocTypeEvent, &u)
 	u = uuid.New()
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		updateRecordUser(r, &u)
+		updateDocuemntUser(r, &u)
 	}
 }
