@@ -7,21 +7,21 @@ import (
 )
 
 type Event struct {
-	Record
+	Document
 
-	Agency        string     `json:"agency,omitempty"`        // a
-	Route         string     `json:"route,omitempty"`         // r
-	Trip          string     `json:"trip,omitempty"`          // tr
-	UnitID        string     `json:"unitID,omitempty"`        // u
-	UnitCount     *int       `json:"unitCount,omitempty"`     // uc
-	UnitPosition  *int       `json:"unitPosition,omitempty"`  // up
-	DepartureStop string     `json:"departureStop,omitempty"` // ds
-	ArrivalStop   string     `json:"arrivalStop,omitempty"`   // as
-	DepartureTime *time.Time `json:"departureTime,omitempty"` // dt
-	ArrivalTime   *time.Time `json:"arrivalTime,omitempty"`   // at
-	Notes         []string   `json:"notes,omitempty"`         // n
+	Agency        string     `json:"agency,omitempty"`
+	Route         string     `json:"route,omitempty"`
+	Trip          string     `json:"trip,omitempty"`
+	UnitID        string     `json:"unitID,omitempty"`
+	UnitCount     *int       `json:"unitCount,omitempty"`
+	UnitPosition  *int       `json:"unitPosition,omitempty"`
+	DepartureStop string     `json:"departureStop,omitempty"`
+	ArrivalStop   string     `json:"arrivalStop,omitempty"`
+	DepartureTime *time.Time `json:"departureTime,omitempty"`
+	ArrivalTime   *time.Time `json:"arrivalTime,omitempty"`
+	Notes         []string   `json:"notes,omitempty"`
 }
 
-func NewEventRecord(user *uuid.UUID) Record {
-	return newRecord(DocTypeEvent, user)
+func NewEventDocuemnt(user *uuid.UUID) Document {
+	return newDocument(DocTypeEvent, user)
 }

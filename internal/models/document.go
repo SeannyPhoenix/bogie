@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type Record struct {
+type Document struct {
 	Id        uuid.UUID  `json:"id" dynamodbav:"id"`
 	Type      string     `json:"type" dynamodbav:"t"`
 	Status    string     `json:"status" dynamodbav:"s"`
@@ -15,9 +15,9 @@ type Record struct {
 	User      *uuid.UUID `json:"user,omitempty" dynamodbav:"u,omitempty"`
 }
 
-func newRecord(t string, user *uuid.UUID) Record {
+func newDocument(t string, user *uuid.UUID) Document {
 	now := time.Now()
-	return Record{
+	return Document{
 		Id:        uuid.New(),
 		CreatedAt: now,
 		UpdatedAt: now,
@@ -27,24 +27,24 @@ func newRecord(t string, user *uuid.UUID) Record {
 	}
 }
 
-func deactivateRecord(r Record) Record {
+func deactivateDocument(r Document) Document {
 	r.Status = DocStatusInactive
 	r.UpdatedAt = time.Now()
 	return r
 }
 
-func activateRecord(r Record) Record {
+func activateDocument(r Document) Document {
 	r.Status = DocStatusActive
 	r.UpdatedAt = time.Now()
 	return r
 }
 
-func updateRecord(r Record) Record {
+func updateDocuemnt(r Document) Document {
 	r.UpdatedAt = time.Now()
 	return r
 }
 
-func updateRecordUser(r Record, user *uuid.UUID) Record {
+func updateDocuemntUser(r Document, user *uuid.UUID) Document {
 	r.User = user
 	r.UpdatedAt = time.Now()
 	return r
