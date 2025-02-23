@@ -7,12 +7,14 @@ import (
 )
 
 type Document struct {
-	Id        uuid.UUID  `json:"id" dynamodbav:"id"`
-	Type      string     `json:"type" dynamodbav:"t"`
-	Status    string     `json:"status" dynamodbav:"s"`
-	CreatedAt time.Time  `json:"createdAt" dynamodbav:"ca"`
-	UpdatedAt time.Time  `json:"updatedAt" dynamodbav:"ua"`
-	User      *uuid.UUID `json:"user,omitempty" dynamodbav:"u,omitempty"`
+	Id        uuid.UUID   `json:"id" dynamodbav:"id"`
+	Type      string      `json:"type" dynamodbav:"t"`
+	Status    string      `json:"status" dynamodbav:"s"`
+	CreatedAt time.Time   `json:"createdAt" dynamodbav:"ca"`
+	UpdatedAt time.Time   `json:"updatedAt" dynamodbav:"ua"`
+	User      *uuid.UUID  `json:"user,omitempty" dynamodbav:"u,omitempty"`
+	Tags      []uuid.UUID `json:"tags" dynamodbav:"tg,omitempty"`
+	Notes     []string    `json:"notes" dynamodbav:"n,omitempty"`
 }
 
 func NewDocument(t string, user *uuid.UUID) Document {
@@ -24,6 +26,8 @@ func NewDocument(t string, user *uuid.UUID) Document {
 		Status:    DocStatusActive,
 		Type:      t,
 		User:      user,
+		Tags:      []uuid.UUID{},
+		Notes:     []string{},
 	}
 }
 

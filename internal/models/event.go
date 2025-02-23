@@ -9,19 +9,24 @@ import (
 type Event struct {
 	Document
 
-	Agency        string     `json:"agency,omitempty"`
-	Route         string     `json:"route,omitempty"`
-	Trip          string     `json:"trip,omitempty"`
-	UnitID        string     `json:"unitID,omitempty"`
-	UnitCount     *int       `json:"unitCount,omitempty"`
-	UnitPosition  *int       `json:"unitPosition,omitempty"`
-	DepartureStop string     `json:"departureStop,omitempty"`
-	ArrivalStop   string     `json:"arrivalStop,omitempty"`
-	DepartureTime *time.Time `json:"departureTime,omitempty"`
-	ArrivalTime   *time.Time `json:"arrivalTime,omitempty"`
-	Notes         []string   `json:"notes,omitempty"`
+	EventType string    `json:"eventType,omitempty"`
+	Timestamp time.Time `json:"timestamp,omitempty"`
+	Exact     bool      `json:"exact,omitempty"`
+
+	Location string   `json:"location,omitempty"`
+	Agency   string   `json:"agency,omitempty"`
+	Route    string   `json:"route,omitempty"`
+	Vehicle  *Vehicle `json:"vehicle,omitempty"`
+	Run      string   `json:"run,omitempty"`
+
+	// Trip         string `json:"trip,omitempty"`
+	// UnitID       string `json:"unitID,omitempty"`
+	// UnitCount    *int   `json:"unitCount,omitempty"`
+	// UnitPosition *int   `json:"unitPosition,omitempty"`
 }
 
-func NewEventDocuemnt(user *uuid.UUID) Document {
-	return NewDocument(DocTypeEvent, user)
+func NewEventDocuemnt(user *uuid.UUID) Event {
+	return Event{
+		Document: NewDocument(DocTypeEvent, user),
+	}
 }
