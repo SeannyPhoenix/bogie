@@ -15,7 +15,7 @@ type Document struct {
 	User      *uuid.UUID `json:"user,omitempty" dynamodbav:"u,omitempty"`
 }
 
-func newDocument(t string, user *uuid.UUID) Document {
+func NewDocument(t string, user *uuid.UUID) Document {
 	now := time.Now()
 	return Document{
 		Id:        uuid.New(),

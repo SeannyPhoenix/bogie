@@ -9,5 +9,5 @@ type Unit struct {
 }
 
 func NewUnitDocument() Document {
-	return newDocument(DocTypeUnit, nil)
+	return NewDocument(DocTypeUnit, nil)
 }

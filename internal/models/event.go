@@ -23,5 +23,5 @@ type Event struct {
 }
 
 func NewEventDocuemnt(user *uuid.UUID) Document {
-	return newDocument(DocTypeEvent, user)
+	return NewDocument(DocTypeEvent, user)
 }
