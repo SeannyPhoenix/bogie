@@ -1,4 +1,4 @@
-User,Agency,Route,Run,VehicleID,ForwardEnd,VehicleCount,VehiclePosition,DepartureStop,ArrivalStop,Date,DepartureTime,ArrivalTime,Notes0,Notes1,Notes2,Notes3,Notes4
+User,Agency,Route,Run,VehicleID,Orientation,VehicleCount,VehiclePosition,DepartureStop,ArrivalStop,Date,DepartureTime,ArrivalTime,Notes0,Notes1,Notes2,Notes3,Notes4
 Seanny,MUNI,,,1079,,,,,,,,,,,,,
 Seanny,CalTrain,,,4021,,,,,,,,,,,,,
 Seanny,Golden Gate Transit,,,1952,,,,,,,,,,,,,

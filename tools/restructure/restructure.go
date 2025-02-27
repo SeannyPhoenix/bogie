@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -11,7 +12,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/seannyphoenix/bogie/internal/models"
 	"github.com/seannyphoenix/bogie/pkg/csvmum"
-	"github.com/seannyphoenix/bogie/pkg/util"
 )
 
 type orig struct {
@@ -47,8 +47,20 @@ func main() {
 
 	ee, _ := split(oo)
 
-	util.PrintAsFormattedJSON(ee)
+	// util.PrintAsFormattedJSON(ee)
 	// util.PrintAsFormattedJSON(dd)
+
+	err = writeParsed(ee)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	err = writeFlat(ee)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
 
 func getOrig() ([]orig, error) {
@@ -80,8 +92,8 @@ func getOrig() ([]orig, error) {
 }
 
 func split(oo []orig) ([]models.Event, []models.Document) {
-	var ee = make([]models.Event, len(oo))
-	var dd = make([]models.Document, len(oo))
+	var ee = []models.Event{}
+	var dd = []models.Document{}
 
 	for i, o := range oo {
 		user := getUser(o)
@@ -96,6 +108,7 @@ func split(oo []orig) ([]models.Event, []models.Document) {
 		var hasDep bool
 
 		if o.DepartureStop != "" || o.DepartureTime != "" {
+			hasDep = true
 			e := models.NewEventDocuemnt(&user)
 			e.EventType = "departure"
 			if o.DepartureTime != "" {
@@ -107,11 +120,10 @@ func split(oo []orig) ([]models.Event, []models.Document) {
 				e.Timestamp = time
 				e.Exact = true
 			}
-			if e.Location != "" {
-				e.Location = o.DepartureStop
-			}
+			e.Location = o.DepartureStop
 			e.Agency = o.Agency
 			e.Route = o.Route
+			e.Location = o.DepartureStop
 			e.Vehicle = getVehicle(o)
 			e.Tags = append(e.Tags, leg.Id)
 			e.Notes = getNotes(o)
@@ -130,16 +142,14 @@ func split(oo []orig) ([]models.Event, []models.Document) {
 				e.Timestamp = time
 				e.Exact = true
 			}
-			if e.Location != "" {
-				e.Location = o.ArrivalStop
-			}
-			e.Agency = o.Agency
-			e.Route = o.Route
+			e.Location = o.ArrivalStop
 			if !hasDep {
+				e.Agency = o.Agency
+				e.Route = o.Route
 				e.Vehicle = getVehicle(o)
+				e.Notes = getNotes(o)
 			}
 			e.Tags = append(e.Tags, leg.Id)
-			e.Notes = getNotes(o)
 			ee = append(ee, e)
 		}
 	}
@@ -180,15 +190,67 @@ func getVehicle(o orig) *models.Vehicle {
 		ID: o.VehicleID,
 	}
 
-	if o.VehiclePosition != nil && o.VehicleID != "" {
-		v.Sequence[o.VehicleID] = *o.VehiclePosition
-	} else {
-		v.Sequence[o.VehicleID] = 0
-	}
-
 	if o.VehicleCount != nil {
 		v.Length = *o.VehicleCount
 	}
 
+	if o.VehiclePosition != nil {
+		v.Sequence = map[string]models.VehicleUnit{
+			o.VehicleID: {
+				Position:    *o.VehiclePosition,
+				Orientation: o.Orientation,
+			},
+		}
+	}
+
 	return &v
+}
+
+func writeParsed(ee []models.Event) error {
+	// open parsed.json
+	f, err := os.Create("parsed.json")
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	// write ee to parsed.json
+	b, err := json.MarshalIndent(ee, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	_, err = f.Write(b)
+
+	return err
+}
+
+func writeFlat(ee []models.Event) error {
+	// open flat.json
+	f, err := os.Create("flat.json")
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	for i, e := range ee {
+		if i > 0 {
+			_, err = f.WriteString("\n")
+			if err != nil {
+				return err
+			}
+		}
+
+		b, err := json.Marshal(e)
+		if err != nil {
+			return err
+		}
+
+		_, err = f.Write(b)
+		if err != nil {
+			return err
+		}
+	}
+
+	return err
 }

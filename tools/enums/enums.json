@@ -1,0 +1,13 @@
+{
+  "DocType": {
+    "type": "uuid",
+    "values": {
+      "user": "8d930d82-24e9-4fc1-824b-9e1253d4ee02",
+      "journey": "9a38efa7-fbd0-4848-806a-6a55b3ddad95"
+    }
+  },
+  "DocStatus": {
+    "active": "5c96e882-112a-42e3-adf3-941f28ff9956",
+    "inactive": "aca32352-08c1-40ee-8a6e-e95d77e68724"
+  }
+}

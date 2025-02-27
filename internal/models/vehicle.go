@@ -1,48 +1,45 @@
 package models
 
+type VehicleUnit struct {
+	Position    int    `json:"position,omitempty"`
+	Orientation string `json:"orientation,omitempty"`
+}
+
 type Vehicle struct {
-	ID          string         `json:"id,omitempty"`
-	Agency      string         `json:"agency,omitempty"`
-	Orientation string         `json:"orientation,omitempty"`
-	Sequence    map[string]int `json:"sequence,omitempty"`
-	Length      int            `json:"length,omitempty"`
-	Position    int            `json:"position,omitempty"`
+	ID       string                 `json:"id,omitempty"`
+	Sequence map[string]VehicleUnit `json:"sequence,omitempty"`
+	Length   int                    `json:"length,omitempty"`
 }
 
 var (
-	Bus = Vehicle{
-		ID:     "5738",
-		Agency: "MUNI",
+	MUNIBus = Vehicle{
+		ID: "5738",
 	}
 
 	BARTLegacyRun = Vehicle{
-		Agency: "BART",
-		Sequence: map[string]int{
-			"1259": 1,
-			"1738": 2,
-			"1607": 3,
-			"1897": 4,
-			"1212": 5,
+		Sequence: map[string]VehicleUnit{
+			"1259": {Position: 1},
+			"1738": {Position: 2},
+			"1607": {Position: 3},
+			"1897": {Position: 4},
+			"1212": {Position: 5},
 		},
 		Length: 5,
 	}
 
-	Plane = Vehicle{
-		ID:     "EI-EIM",
-		Agency: "Aer Lingus",
+	AerLingusPlane = Vehicle{
+		ID: "EI-EIM",
 	}
 
-	TuesdayCommute = Vehicle{
-		ID:     "4496",
-		Agency: "BART",
-		Sequence: map[string]int{
-			"4496": 3,
+	TuesdayBARTCommute = Vehicle{
+		ID: "4496",
+		Sequence: map[string]VehicleUnit{
+			"4496": {Position: 3},
 		},
 		Length: 8,
 	}
 
 	ChurchToKing = Vehicle{
-		ID:     "1501",
-		Agency: "MUNI",
+		ID: "1501",
 	}
 )
