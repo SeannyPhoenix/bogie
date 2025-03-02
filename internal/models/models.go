@@ -34,6 +34,7 @@ func InitDoc(doc BaseDocument) BaseDocument {
 	if doc.Status == "" {
 		doc.Status = DocStatusActive
 	}
+
 	return doc
 }
 
@@ -52,15 +53,15 @@ type Agency struct {
 type Route struct {
 	BaseDocument
 
-	Agency *uuid.UUID `json:"agency,omitempty"`
+	Agency uuid.UUID  `json:"agency"`
 	GTFS   gtfs.Route `json:"gtfs"`
 }
 
 type Stop struct {
 	BaseDocument
 
-	Agency *uuid.UUID `json:"agency,omitempty"`
-	GTFS   gtfs.Stop  `json:"gtfs"`
+	Agency uuid.UUID `json:"agency"`
+	GTFS   gtfs.Stop `json:"gtfs"`
 }
 
 type Event struct {
@@ -84,17 +85,23 @@ type Vehicle struct {
 }
 
 type VehicleUnit struct {
-	Id          *uuid.UUID `json:"id,omitempty"`
-	Orientation string     `json:"orientation,omitempty"`
+	Id          uuid.UUID `json:"id"`
+	Orientation string    `json:"orientation,omitempty"`
 }
 
 type Unit struct {
 	BaseDocument
 
-	Agency uuid.UUID `json:"agency,omitempty"`
-	UnitID string    `json:"unitID,omitempty"`
-	Model  string    `json:"model,omitempty"`
+	UnitID string    `json:"unitID"`
+	Agency uuid.UUID `json:"agency"`
 }
+
+const (
+	GranularityNone        = 0
+	GranularitySecond      = 1
+	GranularityMinute      = 2
+	GranularityFiveMinutes = 3
+)
 
 const (
 	DocTypeUser     = "user"
