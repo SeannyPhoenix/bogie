@@ -8,21 +8,21 @@ type StopTime struct {
 	TripID                   string   `json:"tripId" csv:"trip_id"`
 	ArrivalTime              Time     `json:"arrivalTime,omitempty" csv:"arrival_time"`
 	DepartureTime            Time     `json:"departureTime,omitempty" csv:"departure_time"`
-	StopID                   string   `json:"stopId" csv:"stop_id"`
-	LocationGroupID          string   `json:"locationGroupId" csv:"location_group_id"`
-	LocationID               string   `json:"locationId" csv:"location_id"`
+	StopID                   string   `json:"stopId,omitempty" csv:"stop_id"`
+	LocationGroupID          string   `json:"locationGroupId,omitempty" csv:"location_group_id"`
+	LocationID               string   `json:"locationId,omitempty" csv:"location_id"`
 	StopSequence             int      `json:"stopSequence" csv:"stop_sequence"`
-	StopHeadsign             string   `json:"stopHeadsign" csv:"stop_headsign"`
-	StartPickupDropOffWindow Time     `json:"startPickupDropOffWindow" csv:"start_pickup_drop_off_window"`
-	EndPickupDropOffWindow   Time     `json:"endPickupDropOffWindow" csv:"end_pickup_drop_off_window"`
-	PickupType               *int     `json:"pickupType" csv:"pickup_type"`
-	DropOffType              *int     `json:"dropOffType" csv:"drop_off_type"`
-	ContinuousPickup         *int     `json:"continuousPickup" csv:"continuous_pickup"`
-	ContinuousDropOff        *int     `json:"continuousDropOff" csv:"continuous_drop_off"`
-	ShapeDistTraveled        *float64 `json:"shapeDistTraveled" csv:"shape_dist_traveled"`
-	Timepoint                *int     `json:"timepoint" csv:"timepoint"`
-	PickupBookingRuleId      string   `json:"pickupBookingRuleId" csv:"pickup_booking_rule_id"`
-	DropOffBookingRuleId     string   `json:"dropOffBookingRuleId" csv:"drop_off_booking_rule_id"`
+	StopHeadsign             string   `json:"stopHeadsign,omitempty" csv:"stop_headsign"`
+	StartPickupDropOffWindow Time     `json:"startPickupDropOffWindow,omitempty" csv:"start_pickup_drop_off_window"`
+	EndPickupDropOffWindow   Time     `json:"endPickupDropOffWindow,omitempty" csv:"end_pickup_drop_off_window"`
+	PickupType               *int     `json:"pickupType,omitempty" csv:"pickup_type"`
+	DropOffType              *int     `json:"dropOffType,omitempty" csv:"drop_off_type"`
+	ContinuousPickup         *int     `json:"continuousPickup,omitempty" csv:"continuous_pickup"`
+	ContinuousDropOff        *int     `json:"continuousDropOff,omitempty" csv:"continuous_drop_off"`
+	ShapeDistTraveled        *float64 `json:"shapeDistTraveled,omitempty" csv:"shape_dist_traveled"`
+	Timepoint                *int     `json:"timepoint,omitempty" csv:"timepoint"`
+	PickupBookingRuleId      string   `json:"pickupBookingRuleId,omitempty" csv:"pickup_booking_rule_id"`
+	DropOffBookingRuleId     string   `json:"dropOffBookingRuleId,omitempty" csv:"drop_off_booking_rule_id"`
 }
 
 func (st StopTime) key() string {

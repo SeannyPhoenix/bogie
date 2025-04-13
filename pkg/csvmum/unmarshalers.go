@@ -5,6 +5,7 @@ import (
 	"math/bits"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 func unmarshalString(value string, field reflect.Value) error {
@@ -80,6 +81,7 @@ func unmarshalPointer(value string, field reflect.Value) error {
 }
 
 func unmarshalValue(value string, field reflect.Value) error {
+	value = strings.TrimSpace(value)
 	if m, ok := field.Addr().Interface().(encoding.TextUnmarshaler); ok {
 		if err := m.UnmarshalText([]byte(value)); err != nil {
 			return err
