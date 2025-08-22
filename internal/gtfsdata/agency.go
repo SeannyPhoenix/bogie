@@ -2,10 +2,10 @@ package gtfsdata
 
 import (
 	"context"
+	"log/slog"
 
 	"github.com/google/uuid"
 	"github.com/seannyphoenix/bogie/pkg/gtfs"
-	slogctx "github.com/veqryn/slog-context"
 )
 
 type Agency struct {
@@ -34,8 +34,7 @@ type agencyData struct {
 }
 
 func parseAgencies(ctx context.Context, sch gtfs.GTFSSchedule) (agencyData, error) {
-	log := slogctx.FromCtx(ctx)
-	log.Info("Parsing data")
+	slog.InfoContext(ctx, "Parsing agencies")
 
 	agencies := agencyData{
 		Agencies:    make(map[uuid.UUID]Agency),

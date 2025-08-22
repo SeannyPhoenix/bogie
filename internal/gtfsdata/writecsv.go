@@ -7,12 +7,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
 	"path"
 
 	"github.com/seannyphoenix/bogie/internal/gtfsdata/cardinality"
 	"github.com/seannyphoenix/bogie/pkg/csvmum"
-	slogctx "github.com/veqryn/slog-context"
 )
 
 type writeCsvOptions[T keyedData] struct {
@@ -27,8 +27,7 @@ type meta struct {
 }
 
 func writeCsv[T keyedData](ctx context.Context, opts writeCsvOptions[T]) (meta, error) {
-	log := slogctx.FromCtx(ctx)
-	log.Info(fmt.Sprintf("Writing %d records to %s", len(opts.records), opts.path))
+	slog.InfoContext(ctx, fmt.Sprintf("Writing %d records to %s", len(opts.records), opts.path))
 
 	var m meta
 

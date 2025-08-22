@@ -3,10 +3,10 @@ package gtfsdata
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/google/uuid"
 	"github.com/seannyphoenix/bogie/pkg/gtfs"
-	slogctx "github.com/veqryn/slog-context"
 )
 
 type Route struct {
@@ -34,16 +34,15 @@ func (r Route) sortKey() []byte {
 	return r.Id[:]
 }
 
-type RouteData struct {
+type routeData struct {
 	Routes      map[uuid.UUID]Route  `json:"routes"`
 	GtfsToBogie map[string]uuid.UUID `json:"-"`
 }
 
-func parseRoutes(ctx context.Context, sch gtfs.GTFSSchedule, data BogieGtfsData) (RouteData, error) {
-	log := slogctx.FromCtx(ctx)
-	log.Info("Parsing data")
+func parseRoutes(ctx context.Context, sch gtfs.GTFSSchedule, data BogieGtfsData) (routeData, error) {
+	slog.InfoContext(ctx, "Parsing routes")
 
-	routes := RouteData{
+	routes := routeData{
 		Routes:      make(map[uuid.UUID]Route),
 		GtfsToBogie: make(map[string]uuid.UUID),
 	}

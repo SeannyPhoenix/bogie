@@ -2,10 +2,10 @@ package gtfsdata
 
 import (
 	"context"
+	"log/slog"
 
 	"github.com/google/uuid"
 	"github.com/seannyphoenix/bogie/pkg/gtfs"
-	slogctx "github.com/veqryn/slog-context"
 )
 
 type Trip struct {
@@ -30,17 +30,16 @@ func (t Trip) sortKey() []byte {
 	return t.Id[:]
 }
 
-type TripData struct {
+type tripData struct {
 	Trips       map[uuid.UUID]Trip      `json:"trips"`
 	GtfsToBogie map[string]uuid.UUID    `json:"-"`
 	TripRoutes  map[uuid.UUID]uuid.UUID `json:"-"`
 }
 
-func parseTrips(ctx context.Context, sch gtfs.GTFSSchedule, data BogieGtfsData) (TripData, error) {
-	log := slogctx.FromCtx(ctx)
-	log.Info("Parsing data")
+func parseTrips(ctx context.Context, sch gtfs.GTFSSchedule, data BogieGtfsData) (tripData, error) {
+	slog.InfoContext(ctx, "Parsing trips")
 
-	trips := TripData{
+	trips := tripData{
 		Trips:       make(map[uuid.UUID]Trip),
 		GtfsToBogie: make(map[string]uuid.UUID),
 		TripRoutes:  make(map[uuid.UUID]uuid.UUID),

@@ -3,10 +3,10 @@ package gtfsdata
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/google/uuid"
 	"github.com/seannyphoenix/bogie/pkg/gtfs"
-	slogctx "github.com/veqryn/slog-context"
 )
 
 type StopTime struct {
@@ -42,16 +42,15 @@ func (st StopTime) sortKey() []byte {
 	return []byte(st.Id)
 }
 
-type StopTimeData struct {
+type stopTimeData struct {
 	StopTimes   map[string]StopTime `json:"stopTimes"`
 	GtfsToBogie map[string]string   `json:"-"`
 }
 
-func parseStopTimes(ctx context.Context, sch gtfs.GTFSSchedule, data BogieGtfsData) (StopTimeData, error) {
-	log := slogctx.FromCtx(ctx)
-	log.Info("Parsing data")
+func parseStopTimes(ctx context.Context, sch gtfs.GTFSSchedule, data BogieGtfsData) (stopTimeData, error) {
+	slog.InfoContext(ctx, "Parsing stop times")
 
-	stopTimes := StopTimeData{
+	stopTimes := stopTimeData{
 		StopTimes:   make(map[string]StopTime),
 		GtfsToBogie: make(map[string]string),
 	}
