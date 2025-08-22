@@ -41,7 +41,10 @@ func writeCsv[T keyedData](ctx context.Context, opts writeCsvOptions[T]) (meta, 
 	if err != nil {
 		return m, fmt.Errorf("error creating CSV marshaler: %w", err)
 	}
-	cm.Flush()
+	err = cm.Flush()
+	if err != nil {
+		return m, fmt.Errorf("error flushing CSV marshaler: %w", err)
+	}
 
 	headers, err := buf.ReadBytes('\n')
 	if err != nil && err != io.EOF {
@@ -68,7 +71,10 @@ func writeCsv[T keyedData](ctx context.Context, opts writeCsvOptions[T]) (meta, 
 		ids = append(ids, key)
 		uniqueIds[string(key)] = struct{}{}
 	}
-	cm.Flush()
+	err = cm.Flush()
+	if err != nil {
+		return m, fmt.Errorf("error flushing CSV marshaler: %w", err)
+	}
 
 	c := cardinality.GetCardinality(cardinality.MB, buf.Len(), len(uniqueIds))
 	m.Bits = c.Bits
@@ -156,11 +162,22 @@ func writePartition(opts partitionOptions) error {
 	if err != nil {
 		return fmt.Errorf("error opening partition file: %w", err)
 	}
-	defer file.Close()
+	defer func() {
+		err := file.Close()
+		if err != nil {
+			slog.Error("Error closing partition file", "error", err)
+		}
+	}()
 
 	if opts.gzip {
 		gz := gzip.NewWriter(file)
-		defer gz.Close()
+		defer func() {
+			err := gz.Close()
+			if err != nil {
+				slog.Error("Error closing gzip writer", "error", err)
+			}
+		}()
+
 		_, err = gz.Write(opts.data.Bytes())
 		if err != nil {
 			return fmt.Errorf("error writing line to partition file: %w", err)
@@ -194,7 +211,11 @@ func writeMeta(pth string, meta map[string]meta) error {
 	if err != nil {
 		return fmt.Errorf("error creating meta file: %w", err)
 	}
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			slog.Error("Error closing meta file", "error", err)
+		}
+	}()
 
 	m, err := json.Marshal(meta)
 	if err != nil {
