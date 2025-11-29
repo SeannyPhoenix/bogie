@@ -27,7 +27,7 @@ func GetUUIDBytes(u uuid.UUID) []byte {
 // the test UUID 8d930d82-24e9-4fc1-824b-9e1253d4ee02
 func GetTestUUIDSlice(len int) []uuid.UUID {
 	uuids := make([]uuid.UUID, len)
-	for i := 0; i < len; i++ {
+	for i := range len {
 		uuids[i] = GetTestUUID()
 	}
 	return uuids

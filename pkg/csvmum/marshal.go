@@ -12,14 +12,18 @@ type CSVMarshaler[T any] struct {
 	fieldList []int
 }
 
-func NewMarshaler[T any](w io.Writer) (*CSVMarshaler[T], error) {
+func NewMarshaler[T any](w io.Writer, opts ...marshalerOption) (*CSVMarshaler[T], error) {
 	c := csv.NewWriter(w)
 
-	return NewCSVMarshaler[T](c)
+	return NewCSVMarshaler[T](c, opts...)
 }
 
-func NewCSVMarshaler[T any](w *csv.Writer) (*CSVMarshaler[T], error) {
+func NewCSVMarshaler[T any](w *csv.Writer, opts ...marshalerOption) (*CSVMarshaler[T], error) {
 	m := &CSVMarshaler[T]{writer: w}
+
+	for _, opt := range opts {
+		opt(w)
+	}
 
 	var t T
 	hm, err := buildFieldMap(reflect.TypeOf(t))
@@ -35,6 +39,14 @@ func NewCSVMarshaler[T any](w *csv.Writer) (*CSVMarshaler[T], error) {
 	m.fieldList = fl
 
 	return m, nil
+}
+
+type marshalerOption func(*csv.Writer)
+
+func WithDelimiter(delim rune) marshalerOption {
+	return func(w *csv.Writer) {
+		w.Comma = delim
+	}
 }
 
 func (m *CSVMarshaler[T]) Marshal(record T) error {

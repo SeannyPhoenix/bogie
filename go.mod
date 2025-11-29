@@ -1,16 +1,15 @@
 module github.com/seannyphoenix/bogie
 
-go 1.25
-
-toolchain go1.25.0
+go 1.25.1
 
 require (
-	github.com/aws/aws-lambda-go v1.47.0
+	github.com/aws/aws-lambda-go v1.49.0
 	github.com/aws/aws-sdk-go-v2 v1.36.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.31
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.18.0
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.39.8
 	github.com/google/uuid v1.6.0
+	github.com/seannyphoenix/binarytime v0.0.0-20251018183547-d3d2e9cc5385
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20240604170348-d4e7c9cb6cb8
 )
