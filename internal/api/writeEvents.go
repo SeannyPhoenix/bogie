@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"slices"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
@@ -11,7 +12,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/seannyphoenix/bogie/internal/db"
 	"github.com/seannyphoenix/bogie/internal/models"
-	"github.com/seannyphoenix/bogie/internal/util"
 )
 
 type PutEventsRequest struct {
@@ -30,7 +30,7 @@ func writeEvents(r PutEventsRequest) events.LambdaFunctionURLResponse {
 		}
 	}
 
-	for _, chunk := range util.ChunkifySlice(evs, db.DynamoDBBatchWriteLimit) {
+	for chunk := range slices.Chunk(evs, db.DynamoDBBatchWriteLimit) {
 		println("Chunk size: ", len(chunk))
 		input := dynamodb.BatchWriteItemInput{
 			RequestItems: map[string][]types.WriteRequest{},
