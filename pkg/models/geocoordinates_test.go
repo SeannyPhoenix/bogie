@@ -17,10 +17,10 @@ func TestNewGeoCoordinatesError(t *testing.T) {
 		lon       float64
 		expectErr error
 	}{
-		{lat: -91, lon: 0, expectErr: models.ErrInvalidLatitude},
-		{lat: 91, lon: 0, expectErr: models.ErrInvalidLatitude},
-		{lat: 0, lon: -181, expectErr: models.ErrInvalidLongitude},
-		{lat: 0, lon: 181, expectErr: models.ErrInvalidLongitude},
+		{lat: -91, lon: 0, expectErr: models.InvalidLatitude},
+		{lat: 91, lon: 0, expectErr: models.InvalidLatitude},
+		{lat: 0, lon: -181, expectErr: models.InvalidLongitude},
+		{lat: 0, lon: 181, expectErr: models.InvalidLongitude},
 	}
 
 	for _, tc := range tt {
@@ -238,9 +238,8 @@ func TestGeoCoordinates_UnmarshalJSONError(t *testing.T) {
 
 func BenchmarkGeoCoordinates_MarshalJSON(b *testing.B) {
 	coords := models.MustNewGeoCoordinates(45.1234, -93.1234)
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		_, _ = coords.MarshalJSON()
 	}
 }
@@ -248,18 +247,16 @@ func BenchmarkGeoCoordinates_MarshalJSON(b *testing.B) {
 func BenchmarkGeoCoordinates_UnmarshalJSON(b *testing.B) {
 	data := []byte(`{"lat":45.1234,"lon":-93.1234}`)
 	var coords models.GeoCoordinates
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		_ = coords.UnmarshalJSON(data)
 	}
 }
 
 func BenchmarkGeoCoordinates_MarshalUnmarshalRoundTrip(b *testing.B) {
 	coords := models.MustNewGeoCoordinates(45.1234, -93.1234)
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		data, _ := coords.MarshalJSON()
 		var c models.GeoCoordinates
 		_ = c.UnmarshalJSON(data)
@@ -267,9 +264,8 @@ func BenchmarkGeoCoordinates_MarshalUnmarshalRoundTrip(b *testing.B) {
 }
 
 func BenchmarkGeoCoordinates_NewGeoCoordinates(b *testing.B) {
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		_, _ = models.NewGeoCoordinates(45.1234, -93.1234)
 	}
 }
