@@ -48,3 +48,48 @@ func (s Stop) validate() errorList {
 
 	return errs
 }
+
+func StopNames(stops map[string]Stop) []string {
+	names := make([]string, 0, len(stops))
+	for _, stop := range stops {
+		names = append(names, stop.Name)
+	}
+	return names
+}
+
+type StopItem struct {
+	Stop     Stop
+	Children map[string]Stop
+}
+
+func BuildStopTree(stops map[string]Stop) map[string]StopItem {
+	root := map[string]StopItem{}
+	unclaimed := map[string]Stop{}
+
+	for _, stop := range stops {
+		if stop.ParentStation == "" {
+			root[stop.ID] = StopItem{
+				Stop:     stop,
+				Children: make(map[string]Stop),
+			}
+		} else {
+			parent, exists := root[stop.ParentStation]
+			if !exists {
+				unclaimed[stop.ParentStation] = stop
+				continue
+			}
+			parent.Children[stop.ID] = stop
+		}
+	}
+
+	for parentID, stop := range unclaimed {
+		parent, exists := root[parentID]
+		if !exists {
+			continue
+		}
+		parent.Children[stop.ID] = stop
+		root[parentID] = parent
+	}
+
+	return root
+}

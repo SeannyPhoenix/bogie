@@ -3,6 +3,9 @@ package gtfs
 import (
 	"archive/zip"
 	"fmt"
+	"slices"
+	"strings"
+	"time"
 )
 
 type GTFSSchedule struct {
@@ -85,4 +88,64 @@ func parseSchedule(r *zip.ReadCloser) GTFSSchedule {
 	}
 
 	return s
+}
+
+type StopTimeInfo struct {
+	Time      string
+	Route     string
+	Headsign  string
+	ServiceID string
+}
+
+type StopInfo struct {
+	Stop  Stop
+	Times []StopTimeInfo
+}
+
+func (si StopInfo) String() string {
+	var sb strings.Builder
+	fmt.Fprintf(&sb, "Stop: %s\n", si.Stop.Name)
+	for _, info := range si.Times {
+		fmt.Fprintf(&sb, "  %s Route %s Headsign: %s ServiceID: %s\n", info.Time, info.Route, info.Headsign, info.ServiceID)
+	}
+	return sb.String()
+}
+
+func GetStopInfo(id string, schedule GTFSSchedule) StopInfo {
+	var si StopInfo
+
+	stop, ok := schedule.Stops[id]
+	if !ok {
+		return si
+	}
+	si.Stop = stop
+
+	for _, st := range schedule.StopTimes {
+		if st.StopID == id {
+			r := schedule.Routes[schedule.Trips[st.TripID].RouteID]
+			h := st.StopHeadsign
+
+			trip := schedule.Trips[st.TripID]
+
+			if h == "" {
+				h = trip.Headsign
+			}
+			si.Times = append(si.Times, StopTimeInfo{
+				Time:      st.DepartureTime.Format(time.TimeOnly),
+				Route:     r.ShortName,
+				Headsign:  h,
+				ServiceID: trip.ServiceID,
+			})
+		}
+	}
+
+	slices.SortFunc(si.Times, func(a, b StopTimeInfo) int {
+		t := strings.Compare(a.Time, b.Time)
+		if t != 0 {
+			return t
+		}
+		return strings.Compare(a.ServiceID, b.ServiceID)
+	})
+
+	return si
 }

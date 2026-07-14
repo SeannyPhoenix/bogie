@@ -51,7 +51,16 @@ func parseFlags() []handler {
 				hh = append(hh, writeErrors)
 			case "-o":
 				hh = append(hh, printScheduleOverviews)
+			case "-n":
+				hh = append(hh, printStopNames)
 			default:
+			case "-i":
+				if len(os.Args) > 2 {
+					stopID := os.Args[2]
+					hh = append(hh, func(col map[string]gtfs.GTFSSchedule) error {
+						return printStopInfo(col, stopID)
+					})
+				}
 			}
 		}
 	}
