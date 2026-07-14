@@ -30,11 +30,11 @@ func (s Stop) validate() errorList {
 	var errs errorList
 
 	if s.ID == "" {
-		errs.add(fmt.Errorf("stop ID is required"))
+		_ = errs.add(fmt.Errorf("stop ID is required"))
 	}
 	if s.Name == "" {
 		if s.LocationType != nil && (*s.LocationType == StopPlatform || *s.LocationType == Station || *s.LocationType == EntranceExit) {
-			errs.add(fmt.Errorf("stop name is required for location type %d", s.LocationType))
+			_ = errs.add(fmt.Errorf("stop name is required for location type %d", s.LocationType))
 		}
 	}
 	// if !s.Coords.IsValid() {
@@ -43,7 +43,7 @@ func (s Stop) validate() errorList {
 	// 	}
 	// }
 	if s.LocationType != nil && (*s.LocationType < StopPlatform || *s.LocationType > BoardingArea) {
-		errs.add(fmt.Errorf("invalid location type: %d", s.LocationType))
+		_ = errs.add(fmt.Errorf("invalid location type: %d", s.LocationType))
 	}
 
 	return errs

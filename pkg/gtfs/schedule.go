@@ -36,7 +36,7 @@ type fileParser interface {
 func (spec gtfsSpec[R]) parseFile(f *zip.File, schedule *GTFSSchedule, errors *errorList) {
 	r, err := f.Open()
 	if err != nil {
-		errors.add(fmt.Errorf("error opening file: %w", err))
+		_ = errors.add(fmt.Errorf("error opening file: %w", err))
 		return
 	}
 	defer r.Close()
@@ -78,7 +78,7 @@ func parseSchedule(r *zip.ReadCloser) GTFSSchedule {
 		spec := gtfsSpecs[f.Name]
 		if spec == nil {
 			s.unusedFiles = append(s.unusedFiles, f.Name)
-			s.warnings.add(fmt.Errorf("unused file: %s", f.Name))
+			_ = s.warnings.add(fmt.Errorf("unused file: %s", f.Name))
 			continue
 		}
 		spec.parseFile(f, &s, &s.errors)

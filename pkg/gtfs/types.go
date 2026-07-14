@@ -279,7 +279,7 @@ func (t Time) MarshalJSON() ([]byte, error) {
 	if t.IsZero() {
 		return []byte("null"), nil
 	}
-	return []byte(fmt.Sprintf("%d", t.Unix())), nil
+	return fmt.Appendf(nil, "%d", t.Unix()), nil
 }
 
 func (t *Time) UnmarshalJSON(data []byte) error {

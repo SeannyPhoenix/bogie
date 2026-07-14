@@ -2,28 +2,29 @@ package gtfs
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
 )
 
 func Overview(c map[string]GTFSSchedule) string {
-	var o string
+	var o strings.Builder
 
 	for sid, s := range c {
-		o += fmt.Sprintf("Schedule %s\n", sid[0:4])
-		o += fmt.Sprintf("  %d agencies\n", len(s.Agencies))
-		o += fmt.Sprintf("  %d stops\n", len(s.Stops))
-		o += fmt.Sprintf("  %d routes\n", len(s.Routes))
-		o += fmt.Sprintf("  %d calendar entries\n", len(s.Calendar))
-		o += fmt.Sprintf("  %d calendar dates\n", len(s.CalendarDates))
-		o += fmt.Sprintf("  %d trips\n", len(s.Trips))
-		o += fmt.Sprintf("  %d stop times\n", len(s.StopTimes))
-		o += fmt.Sprintf("  %d levels\n", len(s.Levels))
-		o += fmt.Sprintf("  %d errors\n", len(s.errors))
-		o += "\n"
+		fmt.Fprintf(&o, "Schedule %s\n", sid[0:4])
+		fmt.Fprintf(&o, "  %d agencies\n", len(s.Agencies))
+		fmt.Fprintf(&o, "  %d stops\n", len(s.Stops))
+		fmt.Fprintf(&o, "  %d routes\n", len(s.Routes))
+		fmt.Fprintf(&o, "  %d calendar entries\n", len(s.Calendar))
+		fmt.Fprintf(&o, "  %d calendar dates\n", len(s.CalendarDates))
+		fmt.Fprintf(&o, "  %d trips\n", len(s.Trips))
+		fmt.Fprintf(&o, "  %d stop times\n", len(s.StopTimes))
+		fmt.Fprintf(&o, "  %d levels\n", len(s.Levels))
+		fmt.Fprintf(&o, "  %d errors\n", len(s.errors))
+		fmt.Fprint(&o, "\n")
 	}
 
-	return o
+	return o.String()
 }
 
 func CreateGTFSCollection(zipFiles []string) (map[string]GTFSSchedule, error) {

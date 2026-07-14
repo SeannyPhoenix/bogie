@@ -16,13 +16,13 @@ func (c CalendarDate) validate() errorList {
 	var errs errorList
 
 	if c.ServiceID == "" {
-		errs.add(fmt.Errorf("service ID is required"))
+		_ = errs.add(fmt.Errorf("service ID is required"))
 	}
 	if c.Date.IsZero() {
-		errs.add(fmt.Errorf("date is required"))
+		_ = errs.add(fmt.Errorf("date is required"))
 	}
 	if c.ExceptionType != 1 && c.ExceptionType != 2 {
-		errs.add(fmt.Errorf("invalid exception type: %d", c.ExceptionType))
+		_ = errs.add(fmt.Errorf("invalid exception type: %d", c.ExceptionType))
 	}
 
 	return errs

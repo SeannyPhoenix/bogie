@@ -28,16 +28,16 @@ func (r Route) validate() errorList {
 	var errs errorList
 
 	if r.ID == "" {
-		errs.add(fmt.Errorf("route ID is required"))
+		_ = errs.add(fmt.Errorf("route ID is required"))
 	}
 	if r.ShortName == "" {
-		errs.add(fmt.Errorf("route short name is required"))
+		_ = errs.add(fmt.Errorf("route short name is required"))
 	}
 	if r.LongName == "" {
-		errs.add(fmt.Errorf("route long name is required"))
+		_ = errs.add(fmt.Errorf("route long name is required"))
 	}
 	if r.Type == "" {
-		errs.add(fmt.Errorf("route type is required"))
+		_ = errs.add(fmt.Errorf("route type is required"))
 	}
 
 	return errs

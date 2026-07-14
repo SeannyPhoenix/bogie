@@ -13,8 +13,8 @@ type StopTime struct {
 	LocationID               string   `json:"locationId,omitempty" csv:"location_id"`
 	StopSequence             int      `json:"stopSequence" csv:"stop_sequence"`
 	StopHeadsign             string   `json:"stopHeadsign,omitempty" csv:"stop_headsign"`
-	StartPickupDropOffWindow Time     `json:"startPickupDropOffWindow,omitempty" csv:"start_pickup_drop_off_window"`
-	EndPickupDropOffWindow   Time     `json:"endPickupDropOffWindow,omitempty" csv:"end_pickup_drop_off_window"`
+	StartPickupDropOffWindow Time     `json:"startPickupDropOffWindow,omitzero" csv:"start_pickup_drop_off_window"`
+	EndPickupDropOffWindow   Time     `json:"endPickupDropOffWindow,omitzero" csv:"end_pickup_drop_off_window"`
 	PickupType               *int     `json:"pickupType,omitempty" csv:"pickup_type"`
 	DropOffType              *int     `json:"dropOffType,omitempty" csv:"drop_off_type"`
 	ContinuousPickup         *int     `json:"continuousPickup,omitempty" csv:"continuous_pickup"`
@@ -33,13 +33,13 @@ func (st StopTime) validate() errorList {
 	var errs errorList
 
 	if st.TripID == "" {
-		errs.add(fmt.Errorf("trip ID is required"))
+		_ = errs.add(fmt.Errorf("trip ID is required"))
 	}
 	if st.StopSequence < 0 {
-		errs.add(fmt.Errorf("stop sequence must be greater than or equal to 0"))
+		_ = errs.add(fmt.Errorf("stop sequence must be greater than or equal to 0"))
 	}
 	if st.StopID == "" {
-		errs.add(fmt.Errorf("stop ID is required"))
+		_ = errs.add(fmt.Errorf("stop ID is required"))
 	}
 
 	return errs

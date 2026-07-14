@@ -19,10 +19,10 @@ func (l Level) validate() errorList {
 	var errs errorList
 
 	if l.ID == "" {
-		errs.add(fmt.Errorf("missing level_id"))
+		_ = errs.add(fmt.Errorf("missing level_id"))
 	}
 	if l.Index == math.Inf(-1) {
-		errs.add(fmt.Errorf("invalid index valie"))
+		_ = errs.add(fmt.Errorf("invalid index valie"))
 	}
 
 	return errs

@@ -15,7 +15,7 @@ type record interface {
 func parse[T record](f io.Reader, records map[string]T, errors *errorList) {
 	csvm, err := csvmum.NewUnmarshaler[T](f)
 	if err != nil {
-		errors.add(fmt.Errorf("error creating unmarshaler for file: %w", err))
+		_ = errors.add(fmt.Errorf("error creating unmarshaler for file: %w", err))
 		return
 	}
 
@@ -27,20 +27,20 @@ func parse[T record](f io.Reader, records map[string]T, errors *errorList) {
 			break
 		}
 		if err != nil {
-			errors.add(fmt.Errorf("error unmarshalling file: %w", err))
+			_ = errors.add(fmt.Errorf("error unmarshalling file: %w", err))
 			continue
 		}
 
 		errs := r.validate()
 		if errs != nil {
 			for _, e := range errs {
-				errors.add(fmt.Errorf("invalid record: %w", e))
+				_ = errors.add(fmt.Errorf("invalid record: %w", e))
 			}
 			continue
 		}
 
 		if _, ok := records[r.key()]; ok {
-			errors.add(fmt.Errorf("duplicate key: %s", r.key()))
+			_ = errors.add(fmt.Errorf("duplicate key: %s", r.key()))
 			continue
 		}
 

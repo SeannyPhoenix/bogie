@@ -25,13 +25,13 @@ func (t Trip) validate() errorList {
 	var errs errorList
 
 	if t.ID == "" {
-		errs.add(fmt.Errorf("trip ID is required"))
+		_ = errs.add(fmt.Errorf("trip ID is required"))
 	}
 	if t.ServiceID == "" {
-		errs.add(fmt.Errorf("trip service id is required"))
+		_ = errs.add(fmt.Errorf("trip service id is required"))
 	}
 	if t.ID == "" {
-		errs.add(fmt.Errorf("trip ID is required"))
+		_ = errs.add(fmt.Errorf("trip ID is required"))
 	}
 
 	return errs
