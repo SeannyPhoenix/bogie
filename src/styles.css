@@ -1,0 +1,120 @@
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #000000;
+  color: #eeeeee;
+  font-family: sans-serif;
+
+  margin: auto;
+  max-width: 680px;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 1rem;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap:0.5rem;
+
+  .upcoming {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .updated-at {
+    font-size: 0.7rem;
+    color: #999999;
+  }
+}
+
+
+.board {
+  display: grid;
+  grid-template-columns: 50% repeat(3, 1fr);
+  align-items: baseline;
+  row-gap: .25rem;
+
+  .stop-name {
+    grid-column: span 4;
+    font-size: 1.25rem;
+    padding: 0.5rem 0;
+  }
+
+  .route-info {
+    grid-column: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-right: 2rem;
+    padding: 0.25rem 0;
+  }
+
+  .child-stop {
+    padding-left: 1.5rem;
+  }
+
+  .note {
+    grid-column: 2 / -1;
+    color: #999999;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+}
+
+.route-icon {
+  height: 1.25rem;
+  border-radius: 1rem;
+  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canceled {
+  color: #999999;
+  text-decoration: line-through;
+}
+
+.scheduled {
+  color: #cccccc;
+}
+
+.early {
+  color: #cceecc;
+}
+
+.on-time {
+  /* color: #eeeeee; */
+}
+
+.late {
+  color: #eecccc;
+}
+
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+
+  font-size: 0.7rem;
+  color: #999999;
+
+  .status-symbols {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

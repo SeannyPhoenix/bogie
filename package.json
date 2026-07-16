@@ -1,10 +1,19 @@
 {
   "name": "bogie",
+  "private": true,
   "version": "0.0.1",
   "description": "A system for tracking and analyzing transit data",
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   },
   "repository": {
     "type": "git",
