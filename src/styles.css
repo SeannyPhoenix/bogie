@@ -95,11 +95,25 @@ body {
 }
 
 .on-time {
-  /* color: #eeeeee; */
+  color: inherit;
 }
 
 .late {
   color: #eecccc;
+}
+
+.no-link,
+.no-link:visited,
+.no-link:hover,
+.no-link:active,
+.no-link:focus {
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 

@@ -4,10 +4,14 @@ import { Departure } from "./types";
 export function renderDeparture(now: Date, departure: Departure): HTMLElement {
   const element = document.createElement("div");
   const departureStatus = status(departure);
-
   element.className = `departure ${departureStatus}`;
-  element.textContent = `${formatTime(now, departure)} ${statusSymbols[departureStatus]}`;
 
+  const linkEl = document.createElement("a");
+  linkEl.className = "no-link";
+  linkEl.textContent = `${formatTime(now, departure)} ${statusSymbols[departureStatus]}`;
+  linkEl.href = link(departure);
+
+  element.appendChild(linkEl);
   return element;
 }
 
@@ -44,4 +48,9 @@ function formatTime(now: Date, departure: Departure): string {
   }
 
   return `${diffMinutes} min`;
+}
+
+function link(departure: Departure): string {
+  const { tripId } = departure;
+  return `/trips/${tripId}`;
 }

@@ -401,7 +401,7 @@ export function getMockData(): StopDepartures {
   return separate;
 }
 
-function dateAfterMinutes(time: Date, minutesFromNow: number) {
+export function dateAfterMinutes(time: Date, minutesFromNow: number) {
   const randomSeconds = Math.floor(Math.random() * 60);
   return new Date(
     time.getTime() + minutesFromNow * 60_000 + randomSeconds * 1_000,

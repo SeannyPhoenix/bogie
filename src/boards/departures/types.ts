@@ -1,6 +1,4 @@
 export type StopId = string;
-export type RouteId = string;
-export type TripId = string;
 
 export type StopDepartures = {
   asOf: Date;

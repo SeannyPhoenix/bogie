@@ -1,5 +1,5 @@
-import { RenderContext } from "./context";
-import { renderRoute } from "./route";
+import { RenderContext } from "../departures/context";
+import { renderRoute } from "../departures/route";
 import { isParent, Stop, ParentStop } from "./types";
 
 export function renderBoard(ctx: RenderContext): HTMLElement {
