@@ -1,7 +1,6 @@
 import { RenderContext } from "./context";
-import { Departure } from "./types";
 
-const formats = {
+export const formats = {
   timeOnly: new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
     minute: "2-digit",

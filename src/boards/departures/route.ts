@@ -5,6 +5,7 @@ const routeIcons: Record<RouteType, string> = {
   "light-rail": "🚈",
   subway: "🚇",
   rail: "🚆",
+  bus: "🚌",
   ferry: "⛴️",
   "cable-tram": "🚡",
   "aerial-lift": "🚠",

@@ -48,12 +48,26 @@ export type RouteType =
   | "light-rail"
   | "subway"
   | "rail"
+  | "bus"
   | "ferry"
   | "cable-tram"
   | "aerial-lift"
   | "funicular"
   | "trolleybus"
   | "monorail";
+
+export const routeTypeMap: Record<number, RouteType> = {
+  0: "light-rail",
+  1: "subway",
+  3: "bus",
+  2: "rail",
+  4: "ferry",
+  5: "cable-tram",
+  6: "aerial-lift",
+  7: "funicular",
+  11: "trolleybus",
+  12: "monorail",
+};
 
 export function isParent(stop: Stop | ParentStop): stop is ParentStop {
   return "children" in stop;
