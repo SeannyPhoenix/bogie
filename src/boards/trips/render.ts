@@ -1,8 +1,8 @@
 import "./trip.css";
-import { TripsBoardContext } from "./context";
+import { TripBoardContext } from "./context";
 import { renderStop } from "./stop";
 
-export function renderTrip(portal: HTMLElement, ctx: TripsBoardContext) {
+export function renderTrip(portal: HTMLElement, ctx: TripBoardContext) {
   const element = document.createElement("div");
 
   const routeStopTimesElement = renderRouteStopTimes(ctx);
@@ -11,7 +11,7 @@ export function renderTrip(portal: HTMLElement, ctx: TripsBoardContext) {
   portal.replaceChildren(element);
 }
 
-function renderRouteStopTimes(ctx: TripsBoardContext): HTMLElement {
+function renderRouteStopTimes(ctx: TripBoardContext): HTMLElement {
   const element = document.createElement("div");
   element.classList.add("trip-board");
 

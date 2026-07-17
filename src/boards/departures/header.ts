@@ -1,7 +1,7 @@
-import { RenderContext } from "./context";
+import { DepartureBoardContext } from "./context";
 import { timeAgo } from "./time";
 
-export function renderHeader(ctx: RenderContext): HTMLDivElement {
+export function renderHeader(ctx: DepartureBoardContext): HTMLDivElement {
   const element = document.createElement("div");
   element.className = "heading";
 
@@ -18,7 +18,7 @@ function renderUpcoming(): HTMLDivElement {
   return element;
 }
 
-function renderUpdatedAt(ctx: RenderContext): HTMLDivElement {
+function renderUpdatedAt(ctx: DepartureBoardContext): HTMLDivElement {
   const element = document.createElement("div");
   element.className = "updated-at";
   element.textContent = `Updated ${timeAgo(ctx)}`;

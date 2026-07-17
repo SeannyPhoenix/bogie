@@ -1,14 +1,14 @@
 import { RouteStopTimes } from "./types";
 import { getFreshData } from "./freshData";
 
-export type TripsBoardContext = {
+export type TripBoardContext = {
   now: Date;
   data: RouteStopTimes;
   completed?: number;
 };
 
-export function newTripsBoardContext(): TripsBoardContext {
-  const ctx: TripsBoardContext = {
+export function newTripBoardContext(): TripBoardContext {
+  const ctx: TripBoardContext = {
     now: new Date(),
     data: getFreshData(),
     completed: getCompleted(),

@@ -1,8 +1,8 @@
-import { RenderContext } from "../departures/context";
+import { DepartureBoardContext } from "../departures/context";
 import { renderRoute } from "../departures/route";
 import { isParent, Stop, ParentStop } from "./types";
 
-export function renderBoard(ctx: RenderContext): HTMLElement {
+export function renderBoard(ctx: DepartureBoardContext): HTMLElement {
   const element = document.createElement("div");
   element.className = "board";
 

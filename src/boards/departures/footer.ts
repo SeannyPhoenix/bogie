@@ -1,8 +1,8 @@
-import { RenderContext } from "./context";
+import { DepartureBoardContext } from "./context";
 import { statusSymbols } from "./symbols";
 import { timeFetched } from "./time";
 
-export function renderFooter(ctx: RenderContext): HTMLDivElement {
+export function renderFooter(ctx: DepartureBoardContext): HTMLDivElement {
   const element = document.createElement("div");
   element.className = "footer";
   element.append(renderStatusSymbols());
@@ -29,7 +29,7 @@ function renderStatusSymbols(): HTMLDivElement {
   return element;
 }
 
-function renderFetchedAt(ctx: RenderContext): HTMLDivElement {
+function renderFetchedAt(ctx: DepartureBoardContext): HTMLDivElement {
   const element = document.createElement("div");
   element.className = "fetched-at";
   element.textContent = `Fetched at ${timeFetched(ctx)}`;

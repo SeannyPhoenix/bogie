@@ -1,7 +1,6 @@
-import { newRenderContext } from "./boards/departures/context";
-import { getMockData } from "./boards/departures/mockData";
-import { render } from "./boards/departures/render";
-import { newTripsBoardContext } from "./boards/trips/context";
+import { newDepartureBoardContext } from "./boards/departures/context";
+import { renderDepartures } from "./boards/departures/render";
+import { newTripBoardContext } from "./boards/trips/context";
 import { renderTrip } from "./boards/trips/render";
 
 type RenderFunction = () => void;
@@ -12,13 +11,13 @@ export function route(): RenderFunction {
   // get the first path segment
   const first = pathname.split("/")[1];
 
-  const route = routes[first ?? ""];
-  if (route) {
-    return route;
+  const render = routes[first ?? ""];
+  if (render) {
+    return render;
   }
 
-  console.warn(`No route found for pathname: ${pathname}`);
   return () => {
+    console.warn(`No route found for pathname: ${pathname}`);
     console.log(`Pathname: ${pathname}, Search: ${search}`);
   };
 }
@@ -28,24 +27,15 @@ const routes: Record<string, RenderFunction> = {
     console.log("Rendering home page");
   },
   departures: () => {
-    const mockData = getMockData();
+    const ctx = newDepartureBoardContext();
     const { body } = document;
-
-    function update() {
-      const ctx = newRenderContext(mockData);
-      render(body, ctx);
-    }
-    update();
-    setInterval(update, 1000);
+    renderDepartures(body, ctx);
   },
-  trips: () => {
-    const { body } = document;
-
-    function update() {
-      const ctx = newTripsBoardContext();
-      renderTrip(body, ctx);
-    }
-    update();
-    setInterval(update, 1000);
-  },
+  trips: renderTripsRoute,
 };
+
+function renderTripsRoute() {
+  const ctx = newTripBoardContext();
+  const { body } = document;
+  renderTrip(body, ctx);
+}

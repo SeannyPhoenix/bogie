@@ -1,9 +1,12 @@
 import { renderBoard } from "./board";
-import { RenderContext } from "./context";
+import { DepartureBoardContext } from "./context";
 import { renderFooter } from "./footer";
 import { renderHeader } from "./header";
 
-export function render(portal: HTMLElement, ctx: RenderContext): void {
+export function renderDepartures(
+  portal: HTMLElement,
+  ctx: DepartureBoardContext,
+): void {
   const display = document.createElement("div");
   display.className = "display";
 

@@ -1,4 +1,4 @@
-import { RenderContext } from "./context";
+import { DepartureBoardContext } from "./context";
 
 export const formats = {
   timeOnly: new Intl.DateTimeFormat("en-US", {
@@ -8,7 +8,7 @@ export const formats = {
   }),
 };
 
-export function timeAgo(ctx: RenderContext): string {
+export function timeAgo(ctx: DepartureBoardContext): string {
   const {
     now,
     data: { asOf },
@@ -33,7 +33,7 @@ export function timeAgo(ctx: RenderContext): string {
   return `${diffMinutes} minutes ago`;
 }
 
-export function timeFetched(ctx: RenderContext): string {
+export function timeFetched(ctx: DepartureBoardContext): string {
   const { asOf } = ctx.data;
   return formats.timeOnly.format(asOf);
 }

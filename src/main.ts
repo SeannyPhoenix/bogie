@@ -2,7 +2,10 @@ import "./styles.css";
 import { route } from "./router";
 
 function run() {
-  route()();
+  const render = route();
+
+  render();
+  setInterval(render, 1000);
 }
 
 run();
