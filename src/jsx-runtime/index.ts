@@ -3,6 +3,7 @@ import type { HTMLIntrinsicElements } from "./types";
 export interface ElementFactory {
   createElement(localName: string): HTMLElement;
   createTextNode(data: string): Text;
+  createDocumentFragment(): DocumentFragment;
 }
 
 let elementFactory: ElementFactory | null = null;
@@ -14,6 +15,9 @@ if ("document" in globalThis) {
     },
     createTextNode(data: string): Text {
       return document.createTextNode(data);
+    },
+    createDocumentFragment(): DocumentFragment {
+      return document.createDocumentFragment();
     },
   };
 }
@@ -60,7 +64,8 @@ export function jsx(type: any, props: any, key?: string | number): JSX.Element {
   } else if (typeof type === "function") {
     return type(props);
   } else if (type === Fragment) {
-    const fragment = document.createDocumentFragment();
+    const factory = getElementFactory();
+    const fragment = factory.createDocumentFragment();
     appendChildren(fragment, props.children);
     return fragment;
   } else {
