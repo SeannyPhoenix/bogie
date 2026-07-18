@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.stop-name {
+.trip-stop-name {
   grid-column: 1;
   justify-self: end;
 }

@@ -7,12 +7,13 @@ export function renderDepartures(
   portal: HTMLElement,
   ctx: DepartureBoardContext,
 ): void {
-  const display = document.createElement("div");
-  display.className = "display";
+  const content = (
+    <div class="display">
+      {renderHeader(ctx)}
+      {renderBoard(ctx)}
+      {renderFooter(ctx)}
+    </div>
+  );
 
-  display.append(renderHeader(ctx));
-  display.append(renderBoard(ctx));
-  display.append(renderFooter(ctx));
-
-  portal.replaceChildren(display);
+  portal.replaceChildren(content);
 }

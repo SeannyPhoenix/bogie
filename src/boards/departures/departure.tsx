@@ -1,21 +1,25 @@
+import { JSX } from "#bogie/jsx-runtime";
 import { Status, statusSymbols } from "./symbols";
-import { Departure } from "./types";
+import { Departure as DepartureModel } from "./types";
 
-export function renderDeparture(now: Date, departure: Departure): HTMLElement {
-  const element = document.createElement("div");
+type DepartureProps = {
+  now: Date;
+  departure: DepartureModel;
+};
+
+export function Departure({now, departure}: DepartureProps): JSX.Element {
   const departureStatus = status(departure);
-  element.className = `departure ${departureStatus}`;
 
-  const linkEl = document.createElement("a");
-  linkEl.className = "no-link";
-  linkEl.textContent = `${formatTime(now, departure)} ${statusSymbols[departureStatus]}`;
-  linkEl.href = link(departure);
-
-  element.appendChild(linkEl);
-  return element;
+  return (
+    <div class={`departure ${departureStatus}`}>
+      <a class="no-link" href={link(departure)}>
+        {formatTime(now, departure)} {statusSymbols[departureStatus]}
+      </a>
+    </div>
+  );
 }
 
-function status(departure: Departure): Status {
+function status(departure: DepartureModel): Status {
   if (departure.canceled) {
     return "canceled";
   }
@@ -39,7 +43,7 @@ function status(departure: Departure): Status {
   return "scheduled";
 }
 
-function formatTime(now: Date, departure: Departure): string {
+function formatTime(now: Date, departure: DepartureModel): string {
   const time = departure.predicted ?? departure.scheduled;
   const diffMinutes = Math.floor((time.getTime() - now.getTime()) / 60_000);
 
@@ -50,7 +54,7 @@ function formatTime(now: Date, departure: Departure): string {
   return `${diffMinutes} min`;
 }
 
-function link(departure: Departure): string {
+function link(departure: DepartureModel): string {
   const { tripId } = departure;
   return `/trips/${tripId}`;
 }

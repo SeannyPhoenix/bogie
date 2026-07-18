@@ -37,7 +37,6 @@ body {
   }
 }
 
-
 .board {
   display: grid;
   grid-template-columns: 50% repeat(3, 1fr);

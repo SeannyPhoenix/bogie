@@ -5,7 +5,7 @@ function run() {
   const render = route();
 
   render();
-  setInterval(render, 1000);
+  // setInterval(render, 1000);
 }
 
 run();
